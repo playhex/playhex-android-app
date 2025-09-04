@@ -7,6 +7,17 @@ Update version in `app/build.gradle`:
         versionName "1.0.0.3"
 ```
 
+Update version AND commit in fdroiddata:
+
+``` yml
+  - versionName: 1.0.0.3
+    versionCode: 2025090412
+    commit: 47e04282d53eaa340c03a27b88331a8ad09d7a61
+    subdir: app
+    gradle:
+      - yes
+```
+
 Run:
 
 ``` bash
