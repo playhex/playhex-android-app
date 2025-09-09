@@ -41,7 +41,7 @@ def twaManifest = [
     // - icon: Name of the resource in the drawable folder to use as an icon.
     shortcuts: [[name:'Play offline vs AI', short_name:'Play AI', url:'https://playhex.org/play-vs-ai', icon:'shortcut_0']],
     // The duration of fade out animation in milliseconds to be played when removing splash screen.
-    splashScreenFadeOutDuration: 50,
+    splashScreenFadeOutDuration: 150,
     generatorApp: 'PWABuilder', // Application that generated the Android Project
     // The fallback strategy for when Trusted Web Activity is not available. Possible values are
     // 'customtabs' and 'webview'.
@@ -57,8 +57,8 @@ android {
         applicationId "org.playhex.twa"
         minSdkVersion 23
         targetSdkVersion 35
-        versionCode 2025090822
-        versionName "1.0.0.4"
+        versionCode 2025090823
+        versionName "1.0.0.5"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name

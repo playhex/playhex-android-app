@@ -5,6 +5,17 @@ App id: `org.playhex.twa`
 This repo contains source code for [PlayHex](https://playhex.org) TWA.
 It is needed at least for F-Droid to build apk and add it in its store.
 
+## Build locally
+
+https://hub.docker.com/r/mingc/android-build-box/
+
+``` bash
+docker run --rm -v `pwd`:/project mingc/android-build-box bash
+
+# build aab
+./gradlew bundle
+```
+
 ## Rebuild TWA android app
 
 Generates apk and source code.
@@ -18,7 +29,7 @@ Requires my signing key.
 - Fill form:
     - Version: create next "1.0.0.X"
     - Version code: set date+hour "2025090212" for 2 sept 2025, 12h
-    - Splash fade out duration: set "50"
+    - Splash fade out duration: set "150"
     - Display mode: Standalone
     - Signing key: "Use mine", should open new inputs:
         - from my vault, "playhex key"
@@ -28,7 +39,7 @@ Requires my signing key.
 
 Then check for diff between pwabuilder download and this repo:
 
-```
+``` bash
 diff -wqra . ~/Downloads/PlayHex
 ```
 
@@ -38,36 +49,40 @@ diff -wqra . ~/Downloads/PlayHex
 
 Doc: https://f-droid.org/fr/docs/Submitting_to_F-Droid_Quick_Start_Guide/
 
-To check build before submit to fdroid:
+To update on F-Droid:
 
-Update version in `app/build.gradle`:
+- Update version in `app/build.gradle`:
 
 ```
         versionCode 2025090412
         versionName "1.0.0.3"
 ```
 
-Update version AND commit in fdroiddata:
-
-Fork and clone `git@gitlab.com:fdroid/fdroiddata.git`
-
-Add in `metadata/org.playhex.twa.yml`:
+- commit and push
+- Fork and clone `git@gitlab.com:fdroid/fdroiddata.git`
+- Add in `metadata/org.playhex.twa.yml`:
 
 ``` yml
-  - versionName: 1.0.0.3
-    versionCode: 2025090412
-    commit: 47e04282d53eaa340c03a27b88331a8ad09d7a61
+  - versionName: 1.0.0.3      # update
+    versionCode: 2025090412   # update
+    commit: 47e04282d53eaa340c03a27b88331a8ad09d7a61  # update
     subdir: app
     gradle:
       - yes
 ```
 
-Run:
+- Edit in fdroiddata `config.yml`:
+
+``` yaml
+serverwebroot: /tmp
+```
+
+- Run:
 
 ``` bash
 docker run --rm -itu vagrant --entrypoint /bin/bash \
-    -v /..pwd.../dev/fdroiddata:/build:z \
-    -v /..pwd.../dev/fdroidserver:/home/vagrant/fdroidserver:Z \
+    -v /__YOUR_FOLDER__/dev/fdroiddata:/build:z \
+    -v /__YOUR_FOLDER__/dev/fdroidserver:/home/vagrant/fdroidserver:Z \
     registry.gitlab.com/fdroid/fdroidserver:buildserver
 
 . /etc/profile
@@ -76,9 +91,6 @@ export JAVA_HOME=$(java -XshowSettings:properties -version 2>&1 > /dev/null | gr
 cd /build
 
 mkdir -p /tmp/repo/status
-
-# in config.yml, set:
-# serverwebroot: /tmp
 
 fdroid readmeta
 fdroid rewritemeta org.playhex.twa
