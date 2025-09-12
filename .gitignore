@@ -1,2 +1,5 @@
 .gradle/
 build/
+signing.keystore*
+/org.playhex.twa*
+apks/*.idsig

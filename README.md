@@ -10,10 +10,30 @@ It is needed at least for F-Droid to build apk and add it in its store.
 https://hub.docker.com/r/mingc/android-build-box/
 
 ``` bash
-docker run --rm -v `pwd`:/project mingc/android-build-box bash
+docker run -it --rm -v `pwd`:/project mingc/android-build-box bash
 
 # build aab
 ./gradlew bundle
+```
+
+### Sign
+
+Sign apk with my signature.
+
+Given `.apk` and `signing.keystore` are in same folder:
+
+``` bash
+docker run -it --rm -v `pwd`:/project mingc/android-build-box bash
+
+# sign
+/opt/android-sdk/build-tools/36.0.0/apksigner sign \
+  --ks signing.keystore \
+  org.playhex.twa_2025090823.apk
+
+# verify
+/opt/android-sdk/build-tools/36.0.0/apksigner verify \
+  --verbose --print-certs-pem --min-sdk-version 24 \
+  org.playhex.twa_2025090823.apk
 ```
 
 ## Rebuild TWA android app
@@ -60,7 +80,17 @@ To update on F-Droid:
 
 - commit and push
 - Fork and clone `git@gitlab.com:fdroid/fdroiddata.git`
-- Add in `metadata/org.playhex.twa.yml`:
+- Fork and clone `git@gitlab.com:fdroid/fdroidserver.git`
+
+Folder structure must be like:
+
+```
+|- (current) playhex-android-app/
+|- fdroiddata/
+|- fdroidserver/
+```
+
+- Add in `../fdroiddata/metadata/org.playhex.twa.yml`:
 
 ``` yml
   - versionName: 1.0.0.3      # update
@@ -71,7 +101,7 @@ To update on F-Droid:
       - yes
 ```
 
-- Edit in fdroiddata `config.yml`:
+- Edit in `../fdroiddata/config.yml`:
 
 ``` yaml
 serverwebroot: /tmp
@@ -81,8 +111,8 @@ serverwebroot: /tmp
 
 ``` bash
 docker run --rm -itu vagrant --entrypoint /bin/bash \
-    -v /__YOUR_FOLDER__/dev/fdroiddata:/build:z \
-    -v /__YOUR_FOLDER__/dev/fdroidserver:/home/vagrant/fdroidserver:Z \
+    -v $(pwd)/../fdroiddata:/build:z \
+    -v $(pwd)/../fdroidserver:/home/vagrant/fdroidserver:Z \
     registry.gitlab.com/fdroid/fdroidserver:buildserver
 
 . /etc/profile
@@ -91,6 +121,7 @@ export JAVA_HOME=$(java -XshowSettings:properties -version 2>&1 > /dev/null | gr
 cd /build
 
 mkdir -p /tmp/repo/status
+sudo chmod 600 config.yml
 
 fdroid readmeta
 fdroid rewritemeta org.playhex.twa
