@@ -10,11 +10,10 @@ jobs:
   build:
     name: Build, Sign & Release
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout project
         uses: actions/checkout@v4.2.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: set up JDK 17
         uses: actions/setup-java@v4.7.1
@@ -51,8 +50,6 @@ jobs:
       - name: Release to GitHub
         uses: svenstaro/upload-release-action@2.11.1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{steps.sign_app.outputs.signedFile}}
-          asset_name: PlayHex-${{ github.ref_name }}-Signed.apk
-          tag: ${{ github.ref }}
+          asset_name: PlayHex-${{ github.ref_name }}-signed.apk
           overwrite: true
