@@ -9,11 +9,28 @@ It is needed at least for F-Droid to build apk and add it in its store.
 
 https://hub.docker.com/r/mingc/android-build-box/
 
+Build and generate aab for play store:
+
+- First, update version in `app/build.gradle`:
+
+```
+        versionCode 2025090412
+        versionName "1.0.0.3"
+```
+
+- then, build:
+
 ``` bash
 docker run -it --rm -v `pwd`:/project mingc/android-build-box bash
 
 # build aab
-./gradlew bundle
+./gradlew build && ./gradlew app:bundleRelease
+
+# sign aab (use signing key and info)
+jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+  -keystore signing.keystore \
+  app-release.aab \
+  playhex-alcalyn-key
 ```
 
 ### Sign
@@ -49,6 +66,7 @@ Requires my signing key.
 - Fill form:
     - Version: create next "1.0.0.X"
     - Version code: set date+hour "2025090212" for 2 sept 2025, 12h
+    - Include source code: check
     - Splash fade out duration: set "150"
     - Display mode: Standalone
     - Signing key: "Use mine", should open new inputs:
@@ -93,9 +111,9 @@ Folder structure must be like:
 - Add in `../fdroiddata/metadata/org.playhex.twa.yml`:
 
 ``` yml
-  - versionName: 1.0.0.3      # update
-    versionCode: 2025090412   # update
-    commit: 47e04282d53eaa340c03a27b88331a8ad09d7a61  # update
+  - versionName: 1.0.0.3      # update, same as app/build.gradle versionName
+    versionCode: 2025090412   # update, same as app/build.gradle versionCode
+    commit: '2025090412'      # update, same as app/build.gradle versionCode
     subdir: app
     gradle:
       - yes

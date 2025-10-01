@@ -1,5 +1,9 @@
 .gradle/
 build/
 signing.keystore*
+*.keystore
+*.apk
+*.aab
+*.apk.idsig
 /org.playhex.twa*
 apks/*.idsig
