@@ -7,3 +7,5 @@ signing.keystore*
 *.apk.idsig
 /org.playhex.twa*
 apks/*.idsig
+.idea
+local.properties
