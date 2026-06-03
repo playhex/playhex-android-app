@@ -1,0 +1,1 @@
+Lobby reformulado, adicionados avatares e bandeiras dos jogadores, melhor exploração em jogo: retroceder, tentar alternativas..., adicionado tutorial. Obrigado a todos os doadores: Mason, Bobson, Falsifian e 2 anônimos!

@@ -1,0 +1,1 @@
+Lobby reworked, added players avatars and country flags, better exploration in-game: rewind, try alternatives..., added tutorial. Thanks to all donors: Mason, Bobson, Falsifian, and 2 anonymous!
