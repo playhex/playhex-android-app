@@ -5,35 +5,68 @@ App id: `org.playhex.twa`
 This repo contains source code for [PlayHex](https://playhex.org) TWA.
 It is needed at least for F-Droid to build apk and add it in its store.
 
-## Build locally
+## Build locally (Google Play)
+
+Builds and signs the `.aab` to upload on Google Play Console.
 
 https://hub.docker.com/r/mingc/android-build-box/
 
-Build and generate aab for play store:
+### 1. Update version
 
-- First, update version in `app/build.gradle`:
+In `app/build.gradle`:
 
 ```
-        versionCode 2025090412
-        versionName "1.0.0.3"
+        versionCode 2026091900  # date+hour: "2026091900" for 19 sept 2026, 00h
+        versionName "1.0.0.10"  # next "1.0.0.X"
 ```
 
-- then, build:
+Add the changelog for this version code in every language, e.g `fastlane/metadata/android/fr/changelogs/2026091900.txt`.
+
+Then commit and push, and tag with the version code (F-Droid builds from that tag).
+
+### 2. Build the aab
+
+Requires `signing.keystore` in the current folder (from my vault, "playhex key").
+
+Note: `--dns` is needed when the host DNS is not reachable from inside the container
+(otherwise gradle fails with `UnknownHostException: services.gradle.org`).
 
 ``` bash
-docker run -it --rm -v `pwd`:/project mingc/android-build-box bash
+# build aab -> app/build/outputs/bundle/release/app-release.aab
+docker run --rm --dns 1.1.1.1 --dns 8.8.8.8 -v `pwd`:/project mingc/android-build-box \
+  bash -c "cd /project && ./gradlew build && ./gradlew app:bundleRelease"
 
-# build aab
-./gradlew build && ./gradlew app:bundleRelease
+cp app/build/outputs/bundle/release/app-release.aab .
 
-# sign aab (use signing key and info)
-jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+# sign aab (asks for the keystore password, see signing-key-info.txt)
+docker run -it --rm -v `pwd`:/project -w /project mingc/android-build-box \
+  jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
   -keystore signing.keystore \
   app-release.aab \
   playhex-alcalyn-key
+
+# check it is signed: should list META-INF/PLAYHEX-.RSA
+unzip -l app-release.aab | grep -E "META-INF/.*\.RSA"
 ```
 
-### Sign
+Gradle runs as root in the container, so `app/build/` ends up owned by root.
+If you also build outside docker: `sudo chown -R $USER app/build build`.
+
+### 3. Upload on Google Play
+
+/!\ **Warning**: firefox always get an error when uploading, works only on chrome (not chromium)...
+
+`app-release.aab` should not be committed, check `.gitignore`.
+
+- go to https://play.google.com/console, app "PlayHex" (`org.playhex.twa`)
+- "Test and release" > "Production" (or "Closed testing" first) > "Create new release"
+- upload `app-release.aab` (at the root of the project)
+- release name: `1.0.0.10 (2026091900)`
+- release notes: copy `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`,
+  one language at a time (they are not uploaded automatically, there is no fastlane `Fastfile` here)
+- "Save" > "Review release" > "Start rollout to Production"
+
+## Sign an apk
 
 Sign apk with my signature.
 
