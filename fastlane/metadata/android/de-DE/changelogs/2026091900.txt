@@ -1,0 +1,1 @@
+Technisches Update: Die App zielt jetzt auf Android 16 ab, für bessere Kompatibilität und Sicherheit.

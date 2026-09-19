@@ -1,0 +1,1 @@
+Aktualizacja techniczna: aplikacja jest teraz przeznaczona dla Androida 16, co zapewnia lepszą zgodność i bezpieczeństwo.

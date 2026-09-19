@@ -1,0 +1,1 @@
+Technická aktualizace: aplikace nyní cílí na Android 16, pro lepší kompatibilitu a bezpečnost.

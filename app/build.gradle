@@ -56,9 +56,9 @@ android {
     defaultConfig {
         applicationId "org.playhex.twa"
         minSdkVersion 23
-        targetSdkVersion 35
-        versionCode 2026060400
-        versionName "1.0.0.9"
+        targetSdkVersion 36
+        versionCode 2026091900
+        versionName "1.0.0.10"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
@@ -208,6 +208,6 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-        implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.6.2'
+        implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.3'
 
 }
