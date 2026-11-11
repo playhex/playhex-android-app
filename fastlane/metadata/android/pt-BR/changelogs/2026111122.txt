@@ -1,0 +1,1 @@
+A barra de status e a barra de navegação agora seguem o tema do aplicativo (claro ou escuro) em vez de ficarem vermelhas.

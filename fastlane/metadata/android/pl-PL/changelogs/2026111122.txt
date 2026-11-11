@@ -1,0 +1,1 @@
+Pasek stanu i pasek nawigacji są teraz dopasowane do motywu aplikacji (jasnego lub ciemnego) zamiast czerwonego.

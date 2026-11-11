@@ -1,0 +1,1 @@
+Stavový a navigační řádek nyní odpovídají motivu aplikace (světlému nebo tmavému) místo červené barvy.

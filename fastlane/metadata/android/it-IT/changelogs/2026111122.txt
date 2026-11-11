@@ -1,0 +1,1 @@
+La barra di stato e la barra di navigazione ora seguono il tema dell'app (chiaro o scuro) invece di essere rosse.

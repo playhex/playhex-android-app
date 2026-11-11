@@ -1,0 +1,1 @@
+Status- und Navigationsleiste passen sich jetzt dem App-Design (hell oder dunkel) an, statt rot zu sein.

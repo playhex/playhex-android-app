@@ -1,0 +1,1 @@
+Status bar and navigation bar now match the app theme (light or dark) instead of red.

@@ -1,0 +1,1 @@
+La barra de estado y la barra de navegación ahora siguen el tema de la aplicación (claro u oscuro) en lugar de ser rojas.
