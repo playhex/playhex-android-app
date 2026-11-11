@@ -26,12 +26,12 @@ def twaManifest = [
     launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
     name: 'PlayHex', // The application name.
     launcherName: 'PlayHex', // The name shown on the Android Launcher.
-    themeColor: '#DC3545', // The color used for the status bar.
-    themeColorDark: '#DC3545', // The color used for the dark status bar.
-    navigationColor: '#DC3545', // The color used for the navigation bar.
-    navigationColorDark: '#DC3545', // The color used for the dark navbar.
-    navigationDividerColor: '#DC3545', // The navbar divider color.
-    navigationDividerColorDark: '#DC3545', // The dark navbar divider color.
+    themeColor: '#ffffff', // The color used for the status bar.
+    themeColorDark: '#212529', // The color used for the dark status bar.
+    navigationColor: '#ffffff', // The color used for the navigation bar.
+    navigationColorDark: '#212529', // The color used for the dark navbar.
+    navigationDividerColor: '#ffffff', // The navbar divider color.
+    navigationDividerColorDark: '#212529', // The dark navbar divider color.
     backgroundColor: '#212529', // The color used for the splash screen background.
     enableNotifications: true, // Set to true to enable notification delegation.
     // Every shortcut must include the following fields:
