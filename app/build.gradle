@@ -26,8 +26,8 @@ def twaManifest = [
     launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
     name: 'PlayHex', // The application name.
     launcherName: 'PlayHex', // The name shown on the Android Launcher.
-    themeColor: '#ffffff', // The color used for the status bar.
-    themeColorDark: '#212529', // The color used for the dark status bar.
+    themeColor: '#e9ecef', // The color used for the status bar.
+    themeColorDark: '#343a40', // The color used for the dark status bar.
     navigationColor: '#ffffff', // The color used for the navigation bar.
     navigationColorDark: '#212529', // The color used for the dark navbar.
     navigationDividerColor: '#ffffff', // The navbar divider color.
