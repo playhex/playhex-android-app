@@ -1,0 +1,4 @@
+- Streaming w Hexplorerze: udostępnij link do swojej analizy, inni widzą Twój kursor i czatują z Tobą
+- Graj od dowolnej pozycji, przeciwko botowi lub graczowi
+- Zaproś znajomego, którego jeszcze nie ma na PlayHex, linkiem do prywatnej partii lub kodem QR
+- Handicap: daj słabszemu graczowi dodatkowe kamienie

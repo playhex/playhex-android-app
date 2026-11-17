@@ -1,0 +1,4 @@
+- Streamování v Hexploreru: sdílejte odkaz na svou analýzu, ostatní sledují váš kurzor a chatují s vámi
+- Hrajte z libovolné pozice, proti botovi nebo hráči
+- Pozvěte přítele, který ještě není na PlayHex, odkazem na soukromou partii nebo QR kódem
+- Handicap: dejte slabšímu hráči kameny navíc

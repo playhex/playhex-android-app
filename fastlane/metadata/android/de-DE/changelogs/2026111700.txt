@@ -1,0 +1,4 @@
+- Hexplorer-Streaming: Teile einen Link zu deiner Analyse, andere sehen deinen Cursor und chatten mit dir
+- Spiele ab einer beliebigen Stellung, gegen einen Bot oder einen Spieler
+- Lade einen Freund, der noch nicht auf PlayHex ist, mit einem privaten Partie-Link oder QR-Code ein
+- Vorgabe: Gib dem schwächeren Spieler zusätzliche Steine

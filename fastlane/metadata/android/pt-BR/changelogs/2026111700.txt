@@ -1,0 +1,4 @@
+- Transmissão no Hexplorer: compartilhe um link da sua análise, outros seguem seu cursor e conversam com você
+- Jogue a partir de qualquer posição, contra um bot ou um jogador
+- Convide um amigo que ainda não está no PlayHex com um link de partida privada ou um QR code
+- Handicap: dê pedras extras ao jogador mais fraco
