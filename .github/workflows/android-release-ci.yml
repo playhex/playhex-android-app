@@ -53,3 +53,31 @@ jobs:
           file: ${{steps.sign_app.outputs.signedFile}}
           asset_name: PlayHex-${{ github.ref_name }}-signed.apk
           overwrite: true
+
+      - name: Build and sign AAB (Google Play)
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          ./gradlew bundleRelease
+          echo "$SIGNING_KEY" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore "$RUNNER_TEMP/release.keystore" \
+            -storepass "$KEYSTORE_PASSWORD" -keypass "$KEY_PASSWORD" \
+            -signedjar PlayHex-signed.aab \
+            app/build/outputs/bundle/release/app-release.aab \
+            "$KEY_ALIAS"
+          rm "$RUNNER_TEMP/release.keystore"
+          # fails if not signed
+          unzip -l PlayHex-signed.aab | grep -E "META-INF/.*\.(RSA|EC|DSA)$"
+          # compare with upload key certificate in Play Console > App integrity
+          keytool -printcert -jarfile PlayHex-signed.aab | grep -E "SHA1|SHA256"
+
+      - name: Release AAB to GitHub
+        uses: svenstaro/upload-release-action@2.11.1
+        with:
+          file: PlayHex-signed.aab
+          asset_name: PlayHex-${{ github.ref_name }}-signed.aab
+          overwrite: true

@@ -5,11 +5,10 @@ App id: `org.playhex.twa`
 This repo contains source code for [PlayHex](https://playhex.org) TWA.
 It is needed at least for F-Droid to build apk and add it in its store.
 
-## Build locally (Google Play)
+## Release (Google Play)
 
-Builds and signs the `.aab` to upload on Google Play Console.
-
-https://hub.docker.com/r/mingc/android-build-box/
+The `.aab` is built and signed by GitHub Actions (`.github/workflows/android-release-ci.yml`)
+when a tag is pushed, then attached to the GitHub release, next to the apk.
 
 ### 1. Update version
 
@@ -22,9 +21,25 @@ In `app/build.gradle`:
 
 Add the changelog for this version code in every language, e.g `fastlane/metadata/android/fr/changelogs/2026091900.txt`.
 
-Then commit and push, and tag with the version code (F-Droid builds from that tag).
+Then commit and push, and tag with the version code (F-Droid builds from that tag):
 
-### 2. Build the aab
+``` bash
+git tag 2026091900
+git push origin 2026091900
+```
+
+### 2. Download the aab
+
+Wait for the "Android Release CI" action to finish (https://github.com/playhex/playhex-android-app/actions),
+then download `PlayHex-<versionCode>-signed.aab` from the GitHub release of this tag.
+
+The action log prints the certificate fingerprint of the signed aab:
+it must match the upload key certificate in Play Console > "App integrity".
+
+#### Alternative: build locally with docker
+
+Fallback if the action does not work. Image is several GB:
+https://hub.docker.com/r/mingc/android-build-box/
 
 Requires `signing.keystore` in the current folder (from my vault, "playhex key").
 
@@ -60,7 +75,7 @@ If you also build outside docker: `sudo chown -R $USER app/build build`.
 
 - go to https://play.google.com/console, app "PlayHex" (`org.playhex.twa`)
 - "Test and release" > "Production" (or "Closed testing" first) > "Create new release"
-- upload `app-release.aab` (at the root of the project)
+- upload the `.aab` downloaded from GitHub release (or `app-release.aab` if built locally)
 - release name: `1.0.0.10 (2026091900)`
 - release notes: copy `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`,
   one language at a time (they are not uploaded automatically, there is no fastlane `Fastfile` here)
